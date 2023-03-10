@@ -73,13 +73,11 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  /* background: linear-gradient(to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb)); */
 }
 
 a {
@@ -95,4 +93,93 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+
+.main-div {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
+.todo-section {
+  max-width: 400px;
+}
+
+.todo-div {
+  display: grid;
+  grid-gap: 10px;
+  background: #1c076989;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.todo-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  position: relative;
+  background: white;
+  border-radius: 5px;
+}
+
+.todo-input input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+button {
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.all-todo {
+  display: grid;
+  gap: 10px;
+}
+
+.all-todo .todo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #1c0769bf;
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.all-todo .todo:hover {
+  background: white;
+  color: #1c0769bf;
+}
+
+.todo a {
+  border: none;
+  color: inherit;
+}
+
+.todo button {
+  color: red;
+}
+
+.todo-details {
+  max-width: 400px;
+  background: #1c076989;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 50px;
+  display: grid;
+  grid-gap: 5px;
 }
