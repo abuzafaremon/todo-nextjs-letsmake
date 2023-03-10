@@ -3,31 +3,27 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 const HomePage = () => {
+  const [todos, setTodos] = useState([]);
 
-  const getTodos = () => {
-    if (typeof window !== 'undefined') {
-      const todoLists = localStorage.getItem('todos')
-      if (todoLists) {
-        return JSON.parse(todoLists)
-      } else {
-        return []
-      }
+  useEffect(() => {
+    const todoLists = localStorage.getItem('todos')
+    if (todoLists) {
+      setTodos(JSON.parse(todoLists))
     }
-  }
-  const [todos, setTodos] = useState(getTodos);
+  }, []);
+
   const addTodo = (e) => {
     e.preventDefault();
     const todoText = e.target.todo.value;
+    const allTodo = [{ todoText: todoText, id: Date.now(), completed: false }, ...todos]
     if (!todoText) {
 
     } else {
-      setTodos([{ todoText: todoText, id: Date.now(), completed: false }, ...todos])
+      setTodos(allTodo)
+      localStorage.setItem('todos', JSON.stringify(allTodo))
       e.target.todo.value = '';
     }
   }
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos])
 
   const handleComplete = (id) => {
     let newTodoList = todos.filter(todo => {
@@ -37,17 +33,24 @@ const HomePage = () => {
       return todo
     })
     setTodos(newTodoList)
+    localStorage.setItem('todos', JSON.stringify(newTodoList))
   }
+
   const deleteTodo = (id) => {
     const remainTodos = todos.filter((todo) => todo.id !== id);
+
     setTodos(remainTodos);
+    localStorage.setItem('todos', JSON.stringify(remainTodos))
   }
+
   const clearCompleted = () => {
     let newTodoList = todos.filter(todo => {
       if (!todo.completed) return todo
     })
-    setTodos(newTodoList)
+    setTodos(newTodoList);
+    localStorage.setItem('todos', JSON.stringify(newTodoList))
   }
+
   return (
     <div className="main-div">
       <div className="todo-section">
@@ -59,7 +62,7 @@ const HomePage = () => {
           </form>
           <div className="all-todo">
             {
-              todos?.map(({ id, completed, todoText }) => <div key={id} style={{ background: completed && "green" }} className="todo">
+              todos?.slice(0, 5).map(({ id, completed, todoText }) => <div key={id} style={{ background: completed && "green" }} className="todo">
                 <input onChange={() => handleComplete(id)} type="checkbox" name="completed" id="completed" checked={completed} />
                 <Link href={`/${id}`}><p>{todoText}</p></Link>
                 <button title="Delete Todo" onClick={() => deleteTodo(id)}>&#9003;</button>
