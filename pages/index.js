@@ -5,17 +5,16 @@ import { useState } from "react";
 const HomePage = () => {
 
   const getTodos = () => {
-    let todoLists;
     if (typeof window !== 'undefined') {
-      todoLists = localStorage.getItem('todos')
-    }
-    if (todoLists) {
-      return JSON.parse(localStorage.getItem('todos'))
-    } else {
-      return []
+      const todoLists = localStorage.getItem('todos')
+      if (todoLists) {
+        return JSON.parse(todoLists)
+      } else {
+        return []
+      }
     }
   }
-  const [todos, setTodos] = useState(getTodos());
+  const [todos, setTodos] = useState(getTodos);
   const addTodo = (e) => {
     e.preventDefault();
     const todoText = e.target.todo.value;
@@ -43,6 +42,12 @@ const HomePage = () => {
     const remainTodos = todos.filter((todo) => todo.id !== id);
     setTodos(remainTodos);
   }
+  const clearCompleted = () => {
+    let newTodoList = todos.filter(todo => {
+      if (!todo.completed) return todo
+    })
+    setTodos(newTodoList)
+  }
   return (
     <div className="main-div">
       <div className="todo-section">
@@ -60,6 +65,7 @@ const HomePage = () => {
                 <button title="Delete Todo" onClick={() => deleteTodo(id)}>&#9003;</button>
               </div>)
             }
+            <button onClick={clearCompleted} className="clear-btn">Clear Completed Todo</button>
           </div>
         </div>
       </div>
