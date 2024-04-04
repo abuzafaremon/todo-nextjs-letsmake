@@ -10,6 +10,7 @@ import { useState } from "react";
 
 const HomePage = () => {
   const [todos, setTodos] = useState([]);
+  const username = process.env.NEXT_PUBLIC_USERNAME;
 
   useEffect(() => {
     const todoLists = localStorage.getItem("todos");
@@ -82,7 +83,7 @@ const HomePage = () => {
   return (
     <div className="main-div">
       <div className="todo-section">
-        <h2>Lets Make Todo</h2>
+        <h2>{username} Todo</h2>
         <div className="todo-div">
           <form className="todo-input" onSubmit={addTodo}>
             <input
